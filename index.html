@@ -1,0 +1,2429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF tools for merging, splitting, compressing, and converting PDF files. Professional PDF editor with multiple features.">
+    <meta name="keywords" content="PDF tools, PDF editor, PDF merger, PDF splitter, PDF converter, PDF compressor, PDF watermark">
+    <meta name="author" content="PDF Tools Hub">
+    <meta name="robots" content="index, follow">
+    <title>PDF Tools Hub - Your Complete PDF Solution</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .login-btn, .signup-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: #3498db;
+            border: none;
+            color: white;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(52, 152, 219, 0.9) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            animation: wave 20s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover .tool-icon {
+            transform: translateZ(30px) scale(1.1);
+        }
+
+        .tool-title {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .tool-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: modalSlideIn 0.3s ease forwards;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .file-input {
+            position: relative;
+            margin: 1rem 0;
+            padding: 2.5rem;
+            border: 2px dashed #3498db;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 5px 5px 15px #d9d9d9, -5px -5px 15px #ffffff;
+        }
+
+        .file-input:hover, .file-input.dragover {
+            border-color: #2980b9;
+            background: linear-gradient(145deg, #f5f5f5, #ffffff);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .file-input::before {
+            content: '\f382';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .file-input:hover::before {
+            transform: scale(1.1);
+        }
+
+        .file-input p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        .file-input .upload-text {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .file-input .upload-subtext {
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        .file-preview {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+            display: none;
+        }
+
+        .file-preview.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .file-item:hover {
+            transform: translateX(5px);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8f4f8;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .file-icon i {
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .file-action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            border: none;
+            color: #7f8c8d;
+        }
+
+        .file-action-btn:hover {
+            background: #e8f4f8;
+            color: #3498db;
+            transform: scale(1.1);
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background: #e8f4f8;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress.show {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e8f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e8f4f8;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Enhanced UI Effects */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+
+        .login-content {
+            background-color: white;
+            width: 90%;
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: white;
+            transition: opacity 0.3s;
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+        }
+
+        .google-btn {
+            background-color: #DB4437;
+        }
+
+        .facebook-btn {
+            background-color: #4267B2;
+        }
+
+        /* Ad Spaces */
+        .ad-container {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            margin: 2rem auto;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        .ad-container p {
+            color: #7f8c8d;
+        }
+
+        /* Enhanced Tool Cards */
+        .tool-card {
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 5px 5px 15px #d9d9d9, -5px -5px 15px #ffffff;
+            border: none;
+        }
+
+        .tool-card:hover {
+            box-shadow: 8px 8px 20px #d9d9d9, -8px -8px 20px #ffffff;
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: none;
+            position: relative;
+        }
+
+        .profile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem;
+            min-width: 150px;
+        }
+
+        .profile-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .profile-menu a:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+        }
+
+        .terms-link {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: #7f8c8d;
+        }
+
+        .switch-form a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #2ecc71;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* CGI Effects */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            z-index: -1;
+            border-radius: 10px;
+            animation: glowing 20s linear infinite;
+            background-size: 400%;
+            filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .glow-effect:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .modal-content {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: modalSlideIn 0.3s ease forwards;
+        }
+
+        @keyframes modalSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Button Styles */
+        .action-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+        }
+
+        .action-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .action-btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: buttonSpin 1s linear infinite;
+        }
+
+        @keyframes buttonSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        .action-btn.success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .action-btn.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .action-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .upload-btn i {
+            font-size: 1.2rem;
+        }
+
+        .upload-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .upload-btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: buttonSpin 1s linear infinite;
+        }
+
+        .upload-btn.success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .upload-btn.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .upload-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tool-actions button {
+            flex: 1;
+        }
+
+        /* Download Button Styles */
+        .download-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-btn i {
+            font-size: 1.2rem;
+        }
+
+        .download-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .download-btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: buttonSpin 1s linear infinite;
+        }
+
+        .download-btn.success {
+            background: linear-gradient(135deg, #27ae60, #219a52);
+        }
+
+        .download-btn.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .download-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .download-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            z-index: 1000;
+        }
+
+        .download-options.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .download-option {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+
+        .download-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .download-option i {
+            margin-right: 0.8rem;
+            color: #2ecc71;
+        }
+
+        .download-option span {
+            flex: 1;
+        }
+
+        .download-option small {
+            color: #7f8c8d;
+        }
+
+        /* Compression Options Styles */
+        .compression-options {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .compression-options h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .option-group {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-group label {
+            min-width: 100px;
+            color: #7f8c8d;
+        }
+
+        .option-group select {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            color: #2c3e50;
+        }
+
+        .compression-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .compression-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #e8f4f8;
+            border-radius: 5px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .stat-value {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <header class="header glass-effect">
+        <div class="nav-container">
+            <div class="logo hover-scale">PDF Tools Hub</div>
+            <nav class="nav-links">
+                <a href="#tools">Tools</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
+            </nav>
+            <div class="auth-buttons">
+                <div id="loginButtons">
+                    <button class="login-btn" onclick="showLoginModal()">Login</button>
+                    <button class="signup-btn" onclick="showSignupModal()">Sign Up</button>
+                </div>
+                <div id="userProfile" class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-img" onclick="toggleProfileMenu()">
+                    <div class="profile-menu" id="profileMenu">
+                        <a href="#profile">My Profile</a>
+                        <a href="#settings">Settings</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form class="login-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button class="action-btn" type="submit">Login</button>
+            </form>
+            <div class="social-login">
+                <button class="social-btn google-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </button>
+                <button class="social-btn facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="signupModal" class="login-modal">
+        <div class="login-content">
+            <span class="close-btn" onclick="closeSignupModal()">&times;</span>
+            <h2>Create Account</h2>
+            <form class="login-form" id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termsCheck" required>
+                        I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                    </label>
+                </div>
+                <button class="action-btn" type="submit">Create Account</button>
+            </form>
+            <div class="social-login">
+                <button class="social-btn google-btn" onclick="signupWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Sign up with Google
+                </button>
+                <button class="social-btn facebook-btn" onclick="signupWithFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                    Sign up with Facebook
+                </button>
+            </div>
+            <p class="switch-form">Already have an account? <a href="#" onclick="switchToLogin()">Login here</a></p>
+        </div>
+    </div>
+
+    <div class="loading" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <main class="main-content">
+        <section class="hero-section gradient-bg text-white">
+            <h1 class="animate__animated animate__fadeIn">Every tool you need to work with PDFs in one place</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">All are 100% FREE and easy to use!</p>
+        </section>
+
+        <div class="ad-container">
+            <p>Advertisement Space</p>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-ADSENSE-ID" crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="YOUR-ADSENSE-ID"
+                 data-ad-slot="YOUR-AD-SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-card" onclick="openTool('merge')">
+                <div class="tool-icon">📄</div>
+                <h3 class="tool-title">Merge PDF</h3>
+                <p class="tool-description">Combine PDFs in the order you want with the easiest PDF merger available.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('split')">
+                <div class="tool-icon">✂️</div>
+                <h3 class="tool-title">Split PDF</h3>
+                <p class="tool-description">Separate one page or a whole set for easy conversion into independent PDF files.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('compress')">
+                <div class="tool-icon">💾</div>
+                <h3 class="tool-title">Compress PDF</h3>
+                <p class="tool-description">Reduce file size while optimizing for maximal PDF quality.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('convert')">
+                <div class="tool-icon">🔄</div>
+                <h3 class="tool-title">Convert to PDF</h3>
+                <p class="tool-description">Convert various file formats to PDF with high accuracy.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('edit')">
+                <div class="tool-icon">✏️</div>
+                <h3 class="tool-title">Edit PDF</h3>
+                <p class="tool-description">Add text, images, shapes or freehand annotations to a PDF document.</p>
+                <span class="new-badge">New!</span>
+            </div>
+
+            <div class="tool-card" onclick="openTool('sign')">
+                <div class="tool-icon">✍️</div>
+                <h3 class="tool-title">Sign PDF</h3>
+                <p class="tool-description">Sign yourself or request electronic signatures from others.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('watermark')">
+                <div class="tool-icon">💧</div>
+                <h3 class="tool-title">Watermark</h3>
+                <p class="tool-description">Stamp an image or text over your PDF in seconds.</p>
+            </div>
+
+            <div class="tool-card" onclick="openTool('rotate')">
+                <div class="tool-icon">🔄</div>
+                <h3 class="tool-title">Rotate PDF</h3>
+                <p class="tool-description">Rotate your PDFs the way you need them.</p>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <p>Advertisement Space</p>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-ADSENSE-ID" crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="YOUR-ADSENSE-ID"
+                 data-ad-slot="YOUR-AD-SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PDF Tools Hub</h3>
+                <p>Your number one web app for editing PDF with ease.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Desktop App</a></li>
+                    <li><a href="#">Mobile App</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeTool()">&times;</span>
+            <h2 id="modalTitle">Tool Title</h2>
+            <div id="modalContent">
+                <!-- Tool specific content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+
+        // Function to read PDF file as ArrayBuffer
+        function readPDFFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        // Function to merge PDFs
+        async function mergePDFs() {
+            const fileInput = document.getElementById('mergeFiles');
+            const files = fileInput.files;
+            
+            if (files.length < 2) {
+                showError('Please select at least 2 PDF files to merge');
+                return;
+            }
+
+            showLoading();
+            try {
+                // Read all PDF files
+                const pdfBuffers = await Promise.all(
+                    Array.from(files).map(file => readPDFFile(file))
+                );
+
+                // Create a new PDF document
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                
+                // Copy pages from each PDF
+                for (const pdfBuffer of pdfBuffers) {
+                    const pdf = await PDFLib.PDFDocument.load(pdfBuffer);
+                    const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    pages.forEach(page => mergedPdf.addPage(page));
+                }
+
+                // Save the merged PDF
+                const mergedPdfBytes = await mergedPdf.save();
+                
+                // Create a blob and display in preview
+                const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                // Show preview
+                const preview = document.getElementById('mergePreview');
+                preview.innerHTML = `
+                    <iframe src="${url}" style="width: 100%; height: 500px; border: none;"></iframe>
+                    <button class="action-btn" onclick="downloadMergedPDF('${url}')">Download Merged PDF</button>
+                `;
+            } catch (error) {
+                showError('Error merging PDFs: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Function to split PDF
+        async function splitPDF() {
+            const fileInput = document.getElementById('splitFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showError('Please select a PDF file to split');
+                return;
+            }
+
+            showLoading();
+            try {
+                const pdfBuffer = await readPDFFile(file);
+                const pdf = await PDFLib.PDFDocument.load(pdfBuffer);
+                const pageCount = pdf.getPageCount();
+                
+                // Create a new PDF for each page
+                for (let i = 0; i < pageCount; i++) {
+                    const newPdf = await PDFLib.PDFDocument.create();
+                    const [page] = await newPdf.copyPages(pdf, [i]);
+                    newPdf.addPage(page);
+                    const pdfBytes = await newPdf.save();
+                    
+                    // Create preview for each split page
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const preview = document.getElementById('splitPreview');
+                    preview.innerHTML += `
+                        <div class="split-page">
+                            <h3>Page ${i + 1}</h3>
+                            <iframe src="${url}" style="width: 100%; height: 300px; border: none;"></iframe>
+                            <button class="action-btn" onclick="downloadSplitPDF('${url}', ${i + 1})">Download Page ${i + 1}</button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                showError('Error splitting PDF: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Function to compress PDF
+        async function compressPDF() {
+            const fileInput = document.getElementById('compressFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showError('Please select a PDF file to compress');
+                return;
+            }
+
+            showLoading();
+            try {
+                // Get compression settings
+                const compressionType = document.getElementById('compressionType').value;
+                const imageQuality = document.getElementById('imageQuality').value;
+                const colorMode = document.getElementById('colorMode').value;
+                const resolution = document.getElementById('resolution').value;
+                const textQuality = document.getElementById('textQuality').value;
+                const fontOptimization = document.getElementById('fontOptimization').value;
+
+                // Read PDF file
+                const pdfBuffer = await readPDFFile(file);
+                const pdf = await PDFLib.PDFDocument.load(pdfBuffer);
+                
+                // Store original size
+                const originalSize = pdfBuffer.byteLength;
+
+                // Apply compression based on type
+                switch(compressionType) {
+                    case 'maximum':
+                        await applyMaximumCompression(pdf, {
+                            imageQuality: 'low',
+                            colorMode: 'bw',
+                            resolution: 72,
+                            textQuality: 'low',
+                            fontOptimization: 'minimal'
+                        });
+                        break;
+                    case 'minimum':
+                        await applyMinimumCompression(pdf, {
+                            imageQuality: 'high',
+                            colorMode: 'color',
+                            resolution: 300,
+                            textQuality: 'high',
+                            fontOptimization: 'full'
+                        });
+                        break;
+                    case 'custom':
+                        await applyCustomCompression(pdf, {
+                            imageQuality,
+                            colorMode,
+                            resolution,
+                            textQuality,
+                            fontOptimization
+                        });
+                        break;
+                    default: // balanced
+                        await applyBalancedCompression(pdf, {
+                            imageQuality: 'medium',
+                            colorMode: 'color',
+                            resolution: 150,
+                            textQuality: 'medium',
+                            fontOptimization: 'subset'
+                        });
+                }
+
+                // Save compressed PDF
+                const compressedPdfBytes = await pdf.save();
+                const compressedSize = compressedPdfBytes.length;
+                
+                // Calculate compression ratio
+                const compressionRatio = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+                
+                // Create preview with stats
+                const preview = document.getElementById('compressPreview');
+                const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                preview.innerHTML = `
+                    <div class="compression-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Original Size</div>
+                            <div class="stat-value">${formatFileSize(originalSize)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Compressed Size</div>
+                            <div class="stat-value">${formatFileSize(compressedSize)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Compression Ratio</div>
+                            <div class="stat-value">${compressionRatio}%</div>
+                        </div>
+                    </div>
+                    <div class="compression-preview">
+                        <iframe src="${url}" style="width: 100%; height: 500px; border: none;"></iframe>
+                    </div>
+                    <div class="tool-actions">
+                        <button class="action-btn" onclick="downloadCompressedPDF('${url}', ${compressedSize})">
+                            <i class="fas fa-download"></i> Download Compressed PDF
+                        </button>
+                    </div>
+                `;
+
+                showSuccess(`PDF compressed successfully! Size reduced by ${compressionRatio}%`);
+            } catch (error) {
+                showError('Error compressing PDF: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Helper functions for different compression types
+        async function applyMaximumCompression(pdf, settings) {
+            const pages = pdf.getPages();
+            for (const page of pages) {
+                await compressPage(page, settings);
+            }
+            await optimizeFonts(pdf, settings.fontOptimization);
+        }
+
+        async function applyMinimumCompression(pdf, settings) {
+            const pages = pdf.getPages();
+            for (const page of pages) {
+                await compressPage(page, settings);
+            }
+            await optimizeFonts(pdf, settings.fontOptimization);
+        }
+
+        async function applyBalancedCompression(pdf, settings) {
+            const pages = pdf.getPages();
+            for (const page of pages) {
+                await compressPage(page, settings);
+            }
+            await optimizeFonts(pdf, settings.fontOptimization);
+        }
+
+        async function applyCustomCompression(pdf, settings) {
+            const pages = pdf.getPages();
+            for (const page of pages) {
+                await compressPage(page, settings);
+            }
+            await optimizeFonts(pdf, settings.fontOptimization);
+        }
+
+        async function compressPage(page, settings) {
+            const { width, height } = page.getSize();
+            const images = await page.node.Resources().lookup(PDFLib.PDFName.of('XObject'));
+            
+            if (images) {
+                const imageObjects = images.dict ? Object.values(images.dict) : [];
+                for (const image of imageObjects) {
+                    if (image instanceof PDFLib.PDFStream) {
+                        const imageData = await image.getImage();
+                        if (imageData) {
+                            const compressedData = await compressImageData(imageData, settings);
+                            await image.setImage(compressedData);
+                        }
+                    }
+                }
+            }
+
+            // Apply text compression if needed
+            if (settings.textQuality !== 'high') {
+                await compressText(page, settings.textQuality);
+            }
+        }
+
+        async function compressText(page, quality) {
+            // Implement text compression logic here
+            // This could involve reducing font quality, removing unnecessary metadata, etc.
+        }
+
+        async function optimizeFonts(pdf, optimization) {
+            // Implement font optimization logic here
+            // This could involve subsetting fonts, removing unused glyphs, etc.
+        }
+
+        // Enhanced image compression function
+        async function compressImageData(imageData, options) {
+            const { quality, colorMode, resolution } = options;
+            
+            // Convert image data to blob
+            const blob = new Blob([imageData], { type: 'image/jpeg' });
+            
+            // Create image element
+            const img = new Image();
+            img.src = URL.createObjectURL(blob);
+            
+            // Wait for image to load
+            await new Promise(resolve => img.onload = resolve);
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size based on resolution
+            const scale = resolution / 300; // 300 DPI is standard
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            
+            // Apply color mode
+            ctx.filter = colorMode === 'grayscale' ? 'grayscale(100%)' : 
+                        colorMode === 'bw' ? 'contrast(1000%)' : 'none';
+            
+            // Draw image
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            // Convert to blob with quality setting
+            const qualityValue = quality === 'high' ? 0.9 : 
+                               quality === 'medium' ? 0.7 : 0.5;
+            
+            return new Promise(resolve => {
+                canvas.toBlob(async blob => {
+                    resolve(new Uint8Array(await blob.arrayBuffer()));
+                }, 'image/jpeg', qualityValue);
+            });
+        }
+
+        // Enhanced download function for compressed PDF
+        function downloadCompressedPDF(url, size) {
+            const button = document.querySelector('.action-btn');
+            button.classList.add('loading');
+            button.disabled = true;
+
+            // Create download link
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `compressed_${Date.now()}.pdf`;
+            
+            // Show download progress
+            const progressBar = document.createElement('div');
+            progressBar.className = 'upload-progress show';
+            progressBar.innerHTML = '<div class="progress-bar"></div>';
+            button.parentElement.appendChild(progressBar);
+            
+            // Simulate download progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.querySelector('.progress-bar').style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Force download
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    button.classList.remove('loading');
+                    button.classList.add('success');
+                    button.disabled = false;
+                    progressBar.remove();
+                    
+                    // Show success message
+                    showSuccess(`PDF downloaded successfully! (${formatFileSize(size)})`);
+                    
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        button.classList.remove('success');
+                    }, 2000);
+                }
+            }, 200);
+        }
+
+        // Enhanced download function for all PDF types
+        function downloadPDF(fileName, type) {
+            const button = document.querySelector('.download-btn');
+            button.classList.add('loading');
+            button.disabled = true;
+
+            // Get the file from the file input
+            const fileInput = document.querySelector('input[type="file"]');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showError('No file selected for download');
+                button.classList.remove('loading');
+                button.disabled = false;
+                return;
+            }
+
+            // Create a blob URL for the file
+            const blob = new Blob([file], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+
+            // Create download link
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${fileName.replace('.pdf', '')}_${type}.pdf`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+
+            // Force download
+            setTimeout(() => {
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+                button.classList.remove('loading');
+                button.classList.add('success');
+                button.disabled = false;
+
+                // Show success message
+                showSuccess(`PDF downloaded successfully! (${formatFileSize(file.size)})`);
+
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('success');
+                }, 2000);
+            }, 500);
+        }
+
+        // Function to handle file download with proper MIME type
+        function handleFileDownload(file, fileName) {
+            const blob = new Blob([file], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#3498db'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#3498db',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        document.querySelectorAll('.tool-icon').forEach((icon, index) => {
+            icon.style.animationDelay = `${index * 0.2}s`;
+            icon.classList.add('floating');
+        });
+
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.classList.add('glow-effect');
+        });
+
+        const modal = document.getElementById('toolModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+
+        function openTool(tool) {
+            modal.style.display = 'block';
+            
+            switch(tool) {
+                case 'merge':
+                    modalTitle.textContent = 'Merge PDF Files';
+                    modalContent.innerHTML = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">Merge PDF Files</h3>
+                            <span class="close-btn" onclick="closeTool()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="file-input" onclick="document.getElementById('mergeFiles').click()">
+                                <p class="upload-text">Drop PDF files here or click to upload</p>
+                                <p class="upload-subtext">You can select multiple files</p>
+                            </div>
+                            <input type="file" id="mergeFiles" multiple accept=".pdf" style="display: none">
+                            <div class="file-preview" id="mergePreview"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="tool-actions">
+                                <button class="action-btn" onclick="handlePDFOperation('Merge', this)">
+                                    <i class="fas fa-object-group"></i> Merge PDFs
+                                </button>
+                                <button class="action-btn" onclick="closeTool()">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    setupFileUpload('mergeFiles', 'mergePreview');
+                    break;
+                    
+                case 'split':
+                    modalTitle.textContent = 'Split PDF';
+                    modalContent.innerHTML = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">Split PDF</h3>
+                            <span class="close-btn" onclick="closeTool()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="file-input" onclick="document.getElementById('splitFile').click()">
+                                <p class="upload-text">Drop PDF file here or click to upload</p>
+                                <p class="upload-subtext">Select a PDF file to split</p>
+                            </div>
+                            <input type="file" id="splitFile" accept=".pdf" style="display: none">
+                            <div class="file-preview" id="splitPreview"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="tool-actions">
+                                <button class="action-btn" onclick="handlePDFOperation('Split', this)">
+                                    <i class="fas fa-cut"></i> Split PDF
+                                </button>
+                                <button class="action-btn" onclick="closeTool()">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    setupFileUpload('splitFile', 'splitPreview');
+                    break;
+                    
+                case 'compress':
+                    modalTitle.textContent = 'Compress PDF';
+                    modalContent.innerHTML = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">Compress PDF</h3>
+                            <span class="close-btn" onclick="closeTool()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="file-input" onclick="document.getElementById('compressFile').click()">
+                                <p class="upload-text">Drop PDF file here or click to upload</p>
+                                <p class="upload-subtext">Select a PDF file to compress</p>
+                            </div>
+                            <input type="file" id="compressFile" accept=".pdf" style="display: none">
+                            <div class="file-preview" id="compressPreview"></div>
+                            
+                            <div class="compression-options">
+                                <h4>Compression Settings</h4>
+                                <div class="option-group">
+                                    <label>Compression Type:</label>
+                                    <select id="compressionType">
+                                        <option value="balanced" selected>Balanced (Recommended)</option>
+                                        <option value="maximum">Maximum Compression</option>
+                                        <option value="minimum">Minimum Size</option>
+                                        <option value="custom">Custom Settings</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Image Quality:</label>
+                                    <select id="imageQuality">
+                                        <option value="high">High Quality (Large file size)</option>
+                                        <option value="medium" selected>Medium Quality (Balanced)</option>
+                                        <option value="low">Low Quality (Small file size)</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Color Mode:</label>
+                                    <select id="colorMode">
+                                        <option value="color" selected>Color</option>
+                                        <option value="grayscale">Grayscale</option>
+                                        <option value="bw">Black & White</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Resolution:</label>
+                                    <select id="resolution">
+                                        <option value="300">300 DPI (High)</option>
+                                        <option value="150" selected>150 DPI (Medium)</option>
+                                        <option value="72">72 DPI (Low)</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Text Quality:</label>
+                                    <select id="textQuality">
+                                        <option value="high">High (Clear text)</option>
+                                        <option value="medium" selected>Medium (Balanced)</option>
+                                        <option value="low">Low (Smaller size)</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Font Optimization:</label>
+                                    <select id="fontOptimization">
+                                        <option value="full">Full (All fonts)</option>
+                                        <option value="subset" selected>Subset (Common fonts)</option>
+                                        <option value="minimal">Minimal (Basic fonts)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="tool-actions">
+                                <button class="action-btn" onclick="compressPDF()">
+                                    <i class="fas fa-compress-alt"></i> Compress PDF
+                                </button>
+                                <button class="action-btn" onclick="closeTool()">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    setupFileUpload('compressFile', 'compressPreview');
+                    break;
+                    
+                case 'convert':
+                    modalTitle.textContent = 'Convert to PDF';
+                    modalContent.innerHTML = `
+                        <div class="file-input" onclick="document.getElementById('convertFile').click()">
+                            Drop file here or click to select
+                        </div>
+                        <input type="file" id="convertFile" accept=".doc,.docx,.jpg,.jpeg,.png" style="display: none">
+                        <div class="preview-container" id="convertPreview"></div>
+                        <button class="action-btn" onclick="convertToPDF()">Convert to PDF</button>
+                    `;
+                    break;
+
+                case 'edit':
+                    modalTitle.textContent = 'Edit PDF';
+                    modalContent.innerHTML = `
+                        <div class="file-input" onclick="document.getElementById('editFile').click()">
+                            Drop PDF file here or click to select
+                        </div>
+                        <input type="file" id="editFile" accept=".pdf" style="display: none">
+                        <div class="preview-container" id="editPreview"></div>
+                        <button class="action-btn" onclick="editPDF()">Edit PDF</button>
+                    `;
+                    break;
+
+                case 'sign':
+                    modalTitle.textContent = 'Sign PDF';
+                    modalContent.innerHTML = `
+                        <div class="file-input" onclick="document.getElementById('signFile').click()">
+                            Drop PDF file here or click to select
+                        </div>
+                        <input type="file" id="signFile" accept=".pdf" style="display: none">
+                        <div class="preview-container" id="signPreview"></div>
+                        <button class="action-btn" onclick="signPDF()">Sign PDF</button>
+                    `;
+                    break;
+
+                case 'watermark':
+                    modalTitle.textContent = 'Add Watermark';
+                    modalContent.innerHTML = `
+                        <div class="file-input" onclick="document.getElementById('watermarkFile').click()">
+                            Drop PDF file here or click to select
+                        </div>
+                        <input type="file" id="watermarkFile" accept=".pdf" style="display: none">
+                        <div class="preview-container" id="watermarkPreview"></div>
+                        <button class="action-btn" onclick="addWatermark()">Add Watermark</button>
+                    `;
+                    break;
+
+                case 'rotate':
+                    modalTitle.textContent = 'Rotate PDF';
+                    modalContent.innerHTML = `
+                        <div class="file-input" onclick="document.getElementById('rotateFile').click()">
+                            Drop PDF file here or click to select
+                        </div>
+                        <input type="file" id="rotateFile" accept=".pdf" style="display: none">
+                        <div class="preview-container" id="rotatePreview"></div>
+                        <button class="action-btn" onclick="rotatePDF()">Rotate PDF</button>
+                    `;
+                    break;
+            }
+        }
+
+        function closeTool() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const toolModal = document.getElementById('toolModal');
+            const profileMenu = document.getElementById('profileMenu');
+
+            if (event.target == loginModal) {
+                closeLoginModal();
+            }
+            if (event.target == signupModal) {
+                closeSignupModal();
+            }
+            if (event.target == toolModal) {
+                closeTool();
+            }
+            if (!event.target.closest('.user-profile')) {
+                profileMenu.style.display = 'none';
+            }
+        }
+
+        function mergePDFs() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                alert('PDF merging functionality will be implemented here');
+            }, 1000);
+        }
+
+        function splitPDF() {
+            alert('PDF splitting functionality will be implemented here');
+        }
+
+        function compressPDF() {
+            alert('PDF compression functionality will be implemented here');
+        }
+
+        function convertToPDF() {
+            alert('File conversion functionality will be implemented here');
+        }
+
+        function editPDF() {
+            alert('PDF editing functionality will be implemented here');
+        }
+
+        function signPDF() {
+            alert('PDF signing functionality will be implemented here');
+        }
+
+        function addWatermark() {
+            alert('Watermark functionality will be implemented here');
+        }
+
+        function rotatePDF() {
+            alert('PDF rotation functionality will be implemented here');
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'mergeFiles') {
+                const files = e.target.files;
+                const preview = document.getElementById('mergePreview');
+                preview.innerHTML = `<p>Selected ${files.length} files</p>`;
+            }
+        });
+
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function showSignupModal() {
+            document.getElementById('signupModal').style.display = 'block';
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').style.display = 'none';
+        }
+
+        function switchToLogin() {
+            closeSignupModal();
+            showLoginModal();
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsCheck = document.getElementById('termsCheck').checked;
+
+            // Basic validation
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            if (password.length < 8) {
+                showError('Password must be at least 8 characters long');
+                return;
+            }
+
+            if (!termsCheck) {
+                showError('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+
+            // Show loading state
+            showLoading();
+
+            // Simulate API call
+            setTimeout(() => {
+                hideLoading();
+                // Simulate successful signup
+                showSuccess('Account created successfully!');
+                
+                // Update UI to show logged in state
+                document.getElementById('loginButtons').style.display = 'none';
+                document.getElementById('userProfile').style.display = 'block';
+                
+                // Close signup modal
+                closeSignupModal();
+                
+                // Clear form
+                document.getElementById('signupForm').reset();
+            }, 1500);
+        }
+
+        function signupWithGoogle() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                alert('Google signup will be implemented here');
+            }, 1000);
+        }
+
+        function signupWithFacebook() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                alert('Facebook signup will be implemented here');
+            }, 1000);
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            const form = document.getElementById('signupForm');
+            form.insertBefore(errorDiv, form.firstChild);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            const form = document.getElementById('signupForm');
+            form.insertBefore(successDiv, form.firstChild);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            document.getElementById('loginButtons').style.display = 'flex';
+            document.getElementById('userProfile').style.display = 'none';
+            document.getElementById('profileMenu').style.display = 'none';
+        }
+
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Enhanced file upload functionality
+        function setupFileUpload(inputId, previewId) {
+            const fileInput = document.getElementById(inputId);
+            const previewContainer = document.getElementById(previewId);
+            const fileInputContainer = fileInput.parentElement;
+
+            // Add upload button
+            const uploadBtn = document.createElement('button');
+            uploadBtn.className = 'upload-btn';
+            uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Files';
+            uploadBtn.onclick = (e) => {
+                e.preventDefault();
+                fileInput.click();
+            };
+            fileInputContainer.appendChild(uploadBtn);
+
+            // Add drag and drop functionality
+            fileInputContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileInputContainer.classList.add('dragover');
+                uploadBtn.classList.add('hover');
+            });
+
+            fileInputContainer.addEventListener('dragleave', () => {
+                fileInputContainer.classList.remove('dragover');
+                uploadBtn.classList.remove('hover');
+            });
+
+            fileInputContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileInputContainer.classList.remove('dragover');
+                uploadBtn.classList.remove('hover');
+                fileInput.files = e.dataTransfer.files;
+                updateFilePreview();
+            });
+
+            fileInput.addEventListener('change', updateFilePreview);
+
+            function updateFilePreview() {
+                const files = fileInput.files;
+                if (files.length > 0) {
+                    previewContainer.innerHTML = '';
+                    previewContainer.classList.add('show');
+
+                    Array.from(files).forEach((file, index) => {
+                        const fileItem = createFileItem(file, index);
+                        previewContainer.appendChild(fileItem);
+                    });
+
+                    // Update upload button state
+                    uploadBtn.innerHTML = `<i class="fas fa-check"></i> ${files.length} File(s) Selected`;
+                    uploadBtn.classList.add('success');
+                } else {
+                    previewContainer.classList.remove('show');
+                    uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Files';
+                    uploadBtn.classList.remove('success');
+                }
+            }
+
+            function createFileItem(file, index) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                const fileIcon = document.createElement('div');
+                fileIcon.className = 'file-icon';
+                fileIcon.innerHTML = '<i class="fas fa-file-pdf"></i>';
+
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const fileName = document.createElement('div');
+                fileName.className = 'file-name';
+                fileName.textContent = file.name;
+
+                const fileSize = document.createElement('div');
+                fileSize.className = 'file-size';
+                fileSize.textContent = formatFileSize(file.size);
+
+                const fileActions = document.createElement('div');
+                fileActions.className = 'file-actions';
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'file-action-btn';
+                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                removeBtn.onclick = () => removeFile(index);
+
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'download-btn';
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
+                downloadBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    handleFileDownload(file, file.name);
+                };
+
+                const progressBar = document.createElement('div');
+                progressBar.className = 'upload-progress';
+                progressBar.innerHTML = '<div class="progress-bar"></div>';
+
+                fileInfo.appendChild(fileName);
+                fileInfo.appendChild(fileSize);
+                fileActions.appendChild(removeBtn);
+                fileItem.appendChild(fileIcon);
+                fileItem.appendChild(fileInfo);
+                fileItem.appendChild(fileActions);
+                fileItem.appendChild(progressBar);
+                fileItem.appendChild(downloadBtn);
+
+                return fileItem;
+            }
+
+            function removeFile(index) {
+                const dt = new DataTransfer();
+                const files = fileInput.files;
+                
+                for (let i = 0; i < files.length; i++) {
+                    if (i !== index) {
+                        dt.items.add(files[i]);
+                    }
+                }
+                
+                fileInput.files = dt.files;
+                updateFilePreview();
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function showDownloadOptions(file, button) {
+                const options = document.createElement('div');
+                options.className = 'download-options';
+                options.innerHTML = `
+                    <div class="download-option" onclick="downloadPDF('${file.name}', 'original')">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download Original</span>
+                        <small>${formatFileSize(file.size)}</small>
+                    </div>
+                    <div class="download-option" onclick="downloadPDF('${file.name}', 'compressed')">
+                        <i class="fas fa-compress-alt"></i>
+                        <span>Download Compressed</span>
+                        <small>Smaller file size</small>
+                    </div>
+                    <div class="download-option" onclick="downloadPDF('${file.name}', 'preview')">
+                        <i class="fas fa-eye"></i>
+                        <span>Preview PDF</span>
+                        <small>View before download</small>
+                    </div>
+                `;
+
+                // Remove existing options if any
+                const existingOptions = button.parentElement.querySelector('.download-options');
+                if (existingOptions) {
+                    existingOptions.remove();
+                }
+
+                button.parentElement.appendChild(options);
+                options.classList.add('show');
+
+                // Close options when clicking outside
+                document.addEventListener('click', function closeOptions(e) {
+                    if (!options.contains(e.target) && e.target !== button) {
+                        options.remove();
+                        document.removeEventListener('click', closeOptions);
+                    }
+                });
+            }
+        }
+
+        // Enhanced button handling for PDF operations
+        function handlePDFOperation(operation, button) {
+            button.classList.add('loading');
+            button.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.classList.add('success');
+                button.disabled = false;
+                
+                // Show success message
+                showSuccess(`${operation} completed successfully!`);
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('success');
+                }, 2000);
+            }, 1500);
+        }
+
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html> 
